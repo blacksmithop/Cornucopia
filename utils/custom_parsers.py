@@ -4,6 +4,7 @@ from langchain.output_parsers.openai_tools import JsonOutputKeyToolsParser
 from langchain.schema import AgentAction, AgentFinish
 from typing import Union
 import re
+from langchain.agents import AgentOutputParser
 
 # from utils.llm_tools import Joke
 

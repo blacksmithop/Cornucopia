@@ -1,6 +1,7 @@
 import streamlit as st
 from utils.stream_message import stream_chat
-from utils.memory_manager import with_message_history as ask_llm
+# from utils.memory_manager import with_message_history as ask_llm
+from utils.llm_chain import agent_executor
 from uuid import uuid4
 
 st.title("Identify Speakers from text")
@@ -28,10 +29,11 @@ if prompt := st.chat_input("Ask me anything"):
     st.session_state.messages.append({"role": "user", "content": prompt})
 
     # Get assistant response
-    response = ask_llm.invoke(
-        {"input": prompt},
-        {"configurable": {"session_id": st.session_state["session_id"]}},
-    )
+    # response = ask_llm.invoke(
+    #     {"input": prompt},
+    #     {"configurable": {"session_id": st.session_state["session_id"]}},
+    # )
+    response = agent_executor.run(prompt)
     print(type(response))
     print(f"[Bot] {response}")
 
