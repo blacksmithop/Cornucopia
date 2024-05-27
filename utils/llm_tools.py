@@ -1,11 +1,8 @@
-from langchain.agents import (
-    Tool,
-    AgentExecutor,
-    LLMSingleActionAgent,
-    AgentOutputParser,
-)
+from langchain.agents import Tool
 from utils.openai_llm import gpt3_llm
 from uuid import uuid4
+from typing import Union
+
 
 # from langchain_core.pydantic_v1 import BaseModel, Field, validator
 
@@ -23,12 +20,26 @@ def get_unique_identifier(*args):
     return random_uuid
 
 
+def respond_to_greeting(*args):
+    return gpt3_llm.invoke(args).content
+
+
+greeting_tool = Tool(
+    name="Respond to greetings and small talk",
+    description="Used for responding to greeting or small talk",
+    func=respond_to_greeting,
+)
+
+greeting_tool.return_direct = True
+
+
 tools = [
     Tool(
-        name="Get unique identifier",
+        name="Create unique id (uuid)",
         func=get_unique_identifier,
         description="Useful for when you need to get a random uuid4 string. Use only when explicity requested",
-    )
+    ),
+    greeting_tool,
 ]
 
 
