@@ -1,7 +1,6 @@
 from time import sleep
 
-
-def stream_chat(text: str, obj_ref) -> object:
+def simulate_streaming(text: str, obj_ref) -> object:
     full_response = ""
 
     for chunk in text.split():
