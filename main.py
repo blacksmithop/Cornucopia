@@ -27,18 +27,19 @@ if prompt := st.chat_input("Ask me anything"):
         user_message.markdown(prompt)
     st.session_state.messages.append({"role": "user", "content": prompt})
 
-    # Get agent response
-    response = agent.invoke(
-        {"input": prompt},
-        config={"configurable": {"session_id": st.session_state["session_id"]}},
-    )
-    bot_message = response["output"]
-    print(f"[Bot] {bot_message}")
+    with st.spinner("Getting answer.."):
+        # Get agent response
+        response = agent.invoke(
+            {"input": prompt},
+            config={"configurable": {"session_id": st.session_state["session_id"]}},
+        )
+        bot_message = response["output"]
+        print(f"[Bot] {bot_message}")
 
-    # Display assistant response in chat message container
-    with st.chat_message("assistant"):
-        assistant_message_text = st.empty()
-        for _ in stream_response(text=bot_message, obj_ref=assistant_message_text):
-            pass
-        assistant_message_text.markdown(bot_message)
-    st.session_state.messages.append({"role": "assistant", "content": bot_message})
+        # Display assistant response in chat message container
+        with st.chat_message("assistant"):
+            assistant_message_text = st.empty()
+            for _ in stream_response(text=bot_message, obj_ref=assistant_message_text):
+                pass
+            assistant_message_text.markdown(bot_message)
+        st.session_state.messages.append({"role": "assistant", "content": bot_message})
