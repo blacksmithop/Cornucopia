@@ -140,8 +140,8 @@ tiktoken==0.7.0
 tokenizers==0.19.1
 toml==0.10.2
 toolz==0.12.1
-torch==2.3.0
-torchvision==0.18.0
+torch --index-url https://download.pytorch.org/whl/cpu
+torchvision --index-url https://download.pytorch.org/whl/cpu
 tornado==6.4
 tqdm==4.66.4
 transformers==4.41.1
