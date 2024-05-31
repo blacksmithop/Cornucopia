@@ -10,7 +10,7 @@ from langchain.callbacks.manager import (
 )
 from utils.helpers.knowledge_base import compression_retriever_reordered as supplemented_knowledge_base
 from utils.helpers.parsers import parse_retriever_content
-
+from utils.chains import small_talk_chain
 
 search = DuckDuckGoSearchRun()
 wikipedia = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
@@ -22,18 +22,17 @@ class ConversationInput(BaseModel):
     query: str = Field(description="Used for handling small talk and similar conversation. Use when no suitable action is found. Ask for clarification if necessary")
     
 
-class CustomKnowledgeBaseTool(BaseTool):
+class SmallTalkTool(BaseTool):
     name = "small_talk"
-    description = "Used for handling small talk and similar conversation. Use when no suitable action is found. Ask for clarification if necessary"
+    description = "Used for handling small talk and similar conversation. Use when no other suitable action is found."
     args_schema: Type[BaseModel] = SearchInput
     return_direct = True
     def _run(
         self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
         """Use the tool."""
-        response = supplemented_knowledge_base.get_relevant_documents(query=query)
-        parsed_response = parse_retriever_content(response=response)
-        return parsed_response
+        response = small_talk_chain.invoke({"input": query})
+        return response
     
     async def _arun(
         self, query: str, run_manager: Optional[AsyncCallbackManagerForToolRun] = None
@@ -42,7 +41,7 @@ class CustomKnowledgeBaseTool(BaseTool):
         raise NotImplementedError("custom_search does not support async")
 
 class CustomKnowledgeBaseTool(BaseTool):
-    name = "small_talk"
+    name = "custom_knowledge_search"
     description = "Used for search query that ask for metadata, detailed information, references etc."
     args_schema: Type[BaseModel] = SearchInput
     return_direct = True
@@ -61,7 +60,7 @@ class CustomKnowledgeBaseTool(BaseTool):
         raise NotImplementedError("small_talk does not support async")
 
 
-tool_list = [search, wikipedia, CustomKnowledgeBaseTool()]
+tool_list = [search, wikipedia, CustomKnowledgeBaseTool(), SmallTalkTool()]
 
 if __name__ == "__main__":
     print(wikipedia.run("HUNTER X HUNTER"))
