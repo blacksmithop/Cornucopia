@@ -4,6 +4,21 @@ A LLM powered knowledge assistant.
 
 ---
 
-Do you find yourself spending a non-insignificant time staying upto date on various news? If so, why not have them delievered in one place in an easy-to-consume fashion.
+```mermaid
+graph TD
+  A["Question"]-->B["Agent"]
+  B-->C["Small talk"]
+  B-->D["Wikipedia"]
+  B-->E["Custom knowledge"]
+  B-->F["DuckDuckGo search"]
+  C-->G["Response"]
+  D-->G
+  E-->H["Text/Markdown"]
+  E-->I["Excel"]
+  E-->J["PDF"]
+  F-->G
+  H-->G
+  I-->G
+  J-->G
 
-Cornucopia is an ambitious attempt to make happen. Powered by LLMs and bought together with Langchain and duct-tape this project aim to make some headway towards that goal.
+```
