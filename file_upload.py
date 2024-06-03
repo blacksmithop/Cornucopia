@@ -1,6 +1,6 @@
 import streamlit as st
-from time import sleep
-
+from utils.helpers.document_loaders import BytesIOPyMuPDFLoader, BytesIOTextLoader
+from langchain_core.document_loaders import Blob
 
 
 uploaded_files = st.file_uploader(
@@ -16,8 +16,23 @@ if uploaded_files:
         for file in uploaded_files:
             file_name = file.name
             with st.spinner(f"Processing {file_name}"):
-                file_type = file_name.split(".")[-1]
-                sleep(3)
+                file_parts = file_name.split(".")
+                file_name_raw , file_type = file_parts[0], file_parts[-1]
+                
+                if file_type == "pdf":
+                    pdf_loader = BytesIOPyMuPDFLoader(pdf_stream=file)
+                    documents = pdf_loader.load()
+                    for doc in documents:
+                        doc.metadata["source"] = file_name
+                        doc.metadata["title"] = file_name_raw
+                        # file_path (add url if files are kept) eg: blob, local etc
+                        # add author, add uploader info
+                        
+                elif file_type in ["txt", "md"]:
+                    blob = Blob(data=file.read())
+                    documents = BytesIOTextLoader().lazy_parse(blob)
+                    # add document splitting logic
+                    
                 st.success(body=f"Processed {file_name}", icon="📂")
     
-    st.info(f"Finished processing {len(uploaded_files)} files", icon="✅")
+        st.info(f"Finished processing {len(uploaded_files)} files", icon="✅")
