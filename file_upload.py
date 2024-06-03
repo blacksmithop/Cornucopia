@@ -1,6 +1,8 @@
 import streamlit as st
 from utils.helpers.document_loaders import BytesIOPyMuPDFLoader, BytesIOTextLoader
 from langchain_core.document_loaders import Blob
+from langchain_community.document_loaders import UnstructuredExcelLoader
+from tempfile import NamedTemporaryFile
 
 
 uploaded_files = st.file_uploader(
@@ -32,6 +34,13 @@ if uploaded_files:
                     blob = Blob(data=file.read())
                     documents = BytesIOTextLoader().lazy_parse(blob)
                     # add document splitting logic
+                
+                elif file_type in ["xls", "xlsx"]:
+                    tmpfilepath = NamedTemporaryFile(dir='temp', suffix='.xlsx') 
+                    print(tmpfilepath.name)
+                    tmpfilepath.write(file.read())
+                    # loader = UnstructuredExcelLoader("example_data/stanley-cups.xlsx", mode="elements")
+                    # docs = loader.load()
                     
                 st.success(body=f"Processed {file_name}", icon="📂")
     
