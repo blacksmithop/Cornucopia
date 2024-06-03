@@ -1,4 +1,6 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_experimental.text_splitter import SemanticChunker
+from utils.embeddings import instruct_embeddings
 
 text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=500,
@@ -11,3 +13,5 @@ def get_relevant_chunks(text: str):
     docs = text_splitter.create_documents([text])
     text_chunks = [doc.page_content for doc in docs[:2]]
     return " ".join(text_chunks)
+
+semantic_splitter = SemanticChunker(instruct_embeddings)
