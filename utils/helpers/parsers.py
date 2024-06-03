@@ -5,7 +5,7 @@ from typing import List
 def parse_retriever_content(response: List[Document]):
     response_markdown = ""
     
-    for item in response:
+    for index, item in enumerate(response, start=1):
         page_content = item.page_content
         relevant_content = get_relevant_chunks(text=page_content)
         
@@ -14,7 +14,7 @@ def parse_retriever_content(response: List[Document]):
             title = metadata["title"]
             source = metadata["source"]
             
-            content = f"#### [{title}]({source})\n{relevant_content}\n\n"
+            content = f"{relevant_content}\n[[{index}]({source})]\n\n"
         else:
             content = f"{relevant_content}\n\n"
         
