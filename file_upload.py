@@ -3,6 +3,7 @@ from utils.helpers.document_loaders import BytesIOPyMuPDFLoader, BytesIOTextLoad
 from langchain_core.document_loaders import Blob
 from langchain_community.document_loaders import UnstructuredExcelLoader
 from utils.helpers.text_splitter import semantic_splitter
+from utils.retrievers import upload_docs_db as chroma
 from tempfile import NamedTemporaryFile
 
 
@@ -52,6 +53,9 @@ if uploaded_files:
                     for doc in documents:
                         doc.metadata["source"] = file_name
                         doc.metadata["title"] = file_name_raw
+                        
+                    with st.spinner("Adding document to Chroma DB"):
+                        chroma.add_documents(documents=documents)
 
                 except NameError:
                     st.error(f"Failed to process file {file_name}")
