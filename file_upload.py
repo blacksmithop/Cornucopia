@@ -1,11 +1,13 @@
-import streamlit as st
-from utils.helpers.document_loaders import BytesIOPyMuPDFLoader, BytesIOTextLoader
-from langchain_core.document_loaders import Blob
-from langchain_community.document_loaders import UnstructuredExcelLoader
-from utils.helpers.text_splitter import semantic_splitter
-from utils.retrievers import upload_docs_db as chroma
 from tempfile import NamedTemporaryFile
 
+import streamlit as st
+from langchain_community.document_loaders import UnstructuredExcelLoader
+from langchain_core.document_loaders import Blob
+
+from utils.helpers.document_loaders import (BytesIOPyMuPDFLoader,
+                                            BytesIOTextLoader)
+from utils.helpers.text_splitter import semantic_splitter
+from utils.retrievers import upload_docs_db as chroma
 
 uploaded_files = st.file_uploader(
     label="Upload files",
@@ -53,7 +55,7 @@ if uploaded_files:
                     for doc in documents:
                         doc.metadata["source"] = file_name
                         doc.metadata["title"] = file_name_raw
-                        
+
                     with st.spinner("Adding document to Chroma DB"):
                         chroma.add_documents(documents=documents)
 

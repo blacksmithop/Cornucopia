@@ -3,7 +3,8 @@ from os import getenv
 from dotenv import load_dotenv
 from langchain.embeddings import CacheBackedEmbeddings
 from langchain.storage import LocalFileStore
-from langchain_openai import AzureChatOpenAI, AzureOpenAI, AzureOpenAIEmbeddings
+from langchain_openai import (AzureChatOpenAI, AzureOpenAI,
+                              AzureOpenAIEmbeddings)
 
 load_dotenv()
 store = LocalFileStore("./cache/")

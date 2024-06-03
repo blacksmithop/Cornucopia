@@ -1,12 +1,12 @@
-import streamlit as st
-from utils.helpers.stream import simulate_streaming as stream_response
-from utils.agent_with_memory import agent_with_chat_history as agent
-from streamlit_option_menu import option_menu
 from uuid import uuid4
 
-st.set_page_config(
-        page_title="Chat", page_icon="🗣️", initial_sidebar_state="collapsed"
-)
+import streamlit as st
+from streamlit_option_menu import option_menu
+
+from utils.agent_with_memory import agent_with_chat_history as agent
+from utils.helpers.stream import simulate_streaming as stream_response
+
+st.set_page_config(page_title="Chat", page_icon="🗣️", initial_sidebar_state="collapsed")
 
 if "current_page" not in st.session_state:
     st.session_state["current_page"] = None
@@ -22,15 +22,18 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-option_page_map = {
-    "Home": "./main.py",
-    "Upload": "pages/File_Upload.py"
-}
+option_page_map = {"Home": "./main.py", "Upload": "pages/File_Upload.py"}
 
-                
-navbar_options = option_menu(None, ["Home", "Upload", "Tasks", 'Settings'], 
-    icons=['house', 'cloud-upload', "list-task", 'gear'], 
-    menu_icon="cast", default_index=0, orientation="horizontal", key="navbar")
+
+navbar_options = option_menu(
+    None,
+    ["Home", "Upload", "Tasks", "Settings"],
+    icons=["house", "cloud-upload", "list-task", "gear"],
+    menu_icon="cast",
+    default_index=0,
+    orientation="horizontal",
+    key="navbar",
+)
 
 if navbar_options:
     if st.session_state["current_page"] != navbar_options:

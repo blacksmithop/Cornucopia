@@ -1,5 +1,5 @@
 import chromadb
-import pandas as pd 
+import pandas as pd
 import streamlit as st
 
 
@@ -17,7 +17,7 @@ def view_collections(dir):
     for collection in client.list_collections():
         data = collection.get()
 
-        ids = data['ids']
+        ids = data["ids"]
         embeddings = data["embeddings"]
         metadata = data["metadatas"]
         documents = data["documents"]
@@ -26,7 +26,7 @@ def view_collections(dir):
         st.markdown("### Collection: **%s**" % collection.name)
         st.dataframe(df)
 
+
 db_path = "./utils/chroma_db"
 print(f"Opening database: {db_path}")
 view_collections(db_path)
-
