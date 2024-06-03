@@ -9,6 +9,8 @@ from utils.helpers.document_loaders import (BytesIOPyMuPDFLoader,
 from utils.helpers.text_splitter import semantic_splitter
 from utils.retrievers import upload_docs_db as chroma
 
+st.markdown(f"# File Upload 📂")
+
 uploaded_files = st.file_uploader(
     label="Upload files",
     accept_multiple_files=True,

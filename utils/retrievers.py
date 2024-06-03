@@ -1,6 +1,9 @@
-from langchain_community.retrievers.wikipedia import WikipediaRetriever
+import os
+
+import chromadb
 from langchain_chroma import Chroma
-import os, chromadb
+from langchain_community.retrievers.wikipedia import WikipediaRetriever
+
 from utils.embeddings import instruct_embeddings
 
 # wikipedia
@@ -25,5 +28,8 @@ upload_docs_db = Chroma(
 )
 
 custom_retriever = upload_docs_db.as_retriever(
-    search_type="similarity", search_kwargs={"k": 5, } # "include_metadata": True
+    search_type="similarity",
+    search_kwargs={
+        "k": 5,
+    },  # "include_metadata": True
 )

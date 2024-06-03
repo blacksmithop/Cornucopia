@@ -1,5 +1,6 @@
 from time import sleep
 
+
 def simulate_streaming(text: str, obj_ref) -> object:
     full_response = ""
 

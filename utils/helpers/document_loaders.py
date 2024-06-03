@@ -1,13 +1,11 @@
-from langchain_community.document_loaders import PyMuPDFLoader
-from langchain_community.document_loaders.parsers.pdf import (
-    PyMuPDFParser,
-)
-from typing import Iterator
-from langchain_core.document_loaders import Blob
-from io import BytesIO
-from typing import Any, List
-from langchain_core.documents import Document
 import logging
+from io import BytesIO
+from typing import Any, Iterator, List
+
+from langchain_community.document_loaders import PyMuPDFLoader
+from langchain_community.document_loaders.parsers.pdf import PyMuPDFParser
+from langchain_core.document_loaders import Blob
+from langchain_core.documents import Document
 
 
 class BytesIOPyMuPDFLoader(PyMuPDFLoader):
@@ -51,8 +49,8 @@ class BytesIOPyMuPDFLoader(PyMuPDFLoader):
         )
 
         return parser.parse(blob)
-    
-    
+
+
 from langchain_core.document_loaders import BaseBlobParser, Blob
 
 

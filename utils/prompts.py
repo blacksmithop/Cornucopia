@@ -1,7 +1,7 @@
 from langchain_core.prompts import PromptTemplate
 
 react_prompt = PromptTemplate.from_template(
-"""
+    """
 Answer the following questions as best you can. You have access to the following tools:
 
 {tools}

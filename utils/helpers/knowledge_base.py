@@ -1,16 +1,12 @@
+from langchain.retrievers import (ContextualCompressionRetriever,
+                                  MergerRetriever)
+from langchain.retrievers.document_compressors import \
+    DocumentCompressorPipeline
 from langchain_community.document_transformers import (
-    EmbeddingsClusteringFilter,
-    EmbeddingsRedundantFilter,
-)
-from langchain.retrievers import (
-    ContextualCompressionRetriever,
-    MergerRetriever,
-)
-from langchain.retrievers.document_compressors import DocumentCompressorPipeline
-from utils.retrievers import wiki_retriever, custom_retriever
-from utils.embeddings import instruct_embeddings
-from langchain_community.document_transformers import LongContextReorder
+    EmbeddingsClusteringFilter, EmbeddingsRedundantFilter, LongContextReorder)
 
+from utils.embeddings import instruct_embeddings
+from utils.retrievers import custom_retriever, wiki_retriever
 
 lotr = MergerRetriever(retrievers=[wiki_retriever, custom_retriever])
 
