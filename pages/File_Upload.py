@@ -1,10 +1,9 @@
 from tempfile import NamedTemporaryFile
 
 import streamlit as st
-from streamlit_option_menu import option_menu
-
 from langchain_community.document_loaders import UnstructuredExcelLoader
 from langchain_core.document_loaders import Blob
+from streamlit_option_menu import option_menu
 
 from utils.helpers.document_loaders import (BytesIOPyMuPDFLoader,
                                             BytesIOTextLoader)
@@ -22,7 +21,11 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-option_page_map = {"Home": "./main.py", "Upload": "pages/File_Upload.py", "Settings": "pages/Settings.py"}
+option_page_map = {
+    "Home": "./main.py",
+    "Upload": "pages/File_Upload.py",
+    "Settings": "pages/Settings.py",
+}
 
 navbar_options = option_menu(
     0,

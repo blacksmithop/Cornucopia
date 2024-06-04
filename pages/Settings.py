@@ -1,8 +1,9 @@
-import streamlit as st
-from streamlit_option_menu import option_menu
+import os
+
 import chromadb
 import pandas as pd
-import os
+import streamlit as st
+from streamlit_option_menu import option_menu
 
 st.markdown(
     """
@@ -15,7 +16,11 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-option_page_map = {"Home": "./main.py", "Upload": "pages/File_Upload.py", "Settings": "pages/Settings.py"}
+option_page_map = {
+    "Home": "./main.py",
+    "Upload": "pages/File_Upload.py",
+    "Settings": "pages/Settings.py",
+}
 
 CHROMA_DIR = "./utils/chroma_db"
 
@@ -53,8 +58,6 @@ else:
         metadata = data["metadatas"]
         documents = data["documents"]
 
-        df = pd.DataFrame.from_dict({
-            "Documents": documents, "Metadata": metadata
-        })
+        df = pd.DataFrame.from_dict({"Documents": documents, "Metadata": metadata})
         with st.expander(f"### **{collection.name}**"):
             st.dataframe(df)

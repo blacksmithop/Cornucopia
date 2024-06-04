@@ -22,7 +22,11 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-option_page_map = {"Home": "./main.py", "Upload": "pages/File_Upload.py", "Settings": "pages/Settings.py"}
+option_page_map = {
+    "Home": "./main.py",
+    "Upload": "pages/File_Upload.py",
+    "Settings": "pages/Settings.py",
+}
 
 
 navbar_options = option_menu(
