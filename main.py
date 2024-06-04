@@ -22,13 +22,13 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-option_page_map = {"Home": "./main.py", "Upload": "pages/File_Upload.py"}
+option_page_map = {"Home": "./main.py", "Upload": "pages/File_Upload.py", "Settings": "pages/Settings.py"}
 
 
 navbar_options = option_menu(
     None,
-    ["Home", "Upload", "Tasks", "Settings"],
-    icons=["house", "cloud-upload", "list-task", "gear"],
+    ["Home", "Upload", "Settings"],
+    icons=["house", "cloud-upload", "gear"],
     menu_icon="cast",
     default_index=0,
     orientation="horizontal",

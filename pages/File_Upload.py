@@ -1,6 +1,8 @@
 from tempfile import NamedTemporaryFile
 
 import streamlit as st
+from streamlit_option_menu import option_menu
+
 from langchain_community.document_loaders import UnstructuredExcelLoader
 from langchain_core.document_loaders import Blob
 
@@ -9,7 +11,37 @@ from utils.helpers.document_loaders import (BytesIOPyMuPDFLoader,
 from utils.helpers.text_splitter import semantic_splitter
 from utils.retrievers import upload_docs_db as chroma
 
-st.markdown(f"# File Upload 📂")
+st.markdown(
+    """
+<style>
+    [data-testid="collapsedControl"] {
+        display: none
+    }
+</style>
+""",
+    unsafe_allow_html=True,
+)
+
+option_page_map = {"Home": "./main.py", "Upload": "pages/File_Upload.py", "Settings": "pages/Settings.py"}
+
+navbar_options = option_menu(
+    0,
+    ["Upload", "Home", "Settings"],
+    icons=["cloud-upload", "house", "gear"],
+    menu_icon="cast",
+    default_index=0,
+    orientation="horizontal",
+    key="navbar",
+)
+
+if navbar_options:
+    if st.session_state["current_page"] != navbar_options:
+        st.session_state["current_page"] = navbar_options
+        page = option_page_map.get(navbar_options, None)
+        if page:
+            st.switch_page(page)
+
+st.markdown("# 📂 File Upload")
 
 uploaded_files = st.file_uploader(
     label="Upload files",
