@@ -1,0 +1,99 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar .navbar-brand i,
+.navbar-nav .nav-link i,
+.dropdown-item i {
+    font-size: 1.2em;
+    margin-right: 0.5em;
+}
+
+.send-button i {
+    font-size: 1em;
+}
+
+.rounded-circle {
+    border-radius: 50%;
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px);
+    padding: 1em;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.chat-message {
+    display: flex;
+    align-items: center;
+    margin: 0.5em 0;
+}
+
+.chat-message.bot {
+    justify-content: flex-start;
+}
+
+.chat-message.user {
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.chat-message img {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin: 0 0.5em;
+}
+
+.dark-mode {
+    background-color: #333;
+    color: white;
+}
+
+.dark-mode nav {
+    background-color: #222;
+}
+
+.dark-mode .chat-container {
+    background-color: #444;
+}
+
+.dark-mode .chat-messages {
+    background-color: #222;
+    color: white;
+}
+
+.dark-mode .chat-input input {
+    background-color: #666;
+    color: white;
+    border: 1px solid #555;
+}
+
+.dark-mode .navbar-nav .nav-link i,
+.dark-mode .dropdown-item i {
+    color: #ffcc00;
+}
+
+.dark-mode .send-button {
+    background-color: #ffcc00;
+}
+
+.dark-mode .send-button:hover {
+    background-color: #e6b800;
+}
