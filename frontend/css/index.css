@@ -1,99 +1,48 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.navbar .navbar-brand i,
-.navbar-nav .nav-link i,
-.dropdown-item i {
-    font-size: 1.2em;
-    margin-right: 0.5em;
-}
-
-.send-button i {
-    font-size: 1em;
-}
-
-.rounded-circle {
-    border-radius: 50%;
-}
-
-.chat-container {
+.user-message {
+    text-align: right;
     display: flex;
-    flex-direction: column;
-    height: calc(100vh - 60px);
-    padding: 1em;
-    background-color: #f9f9f9;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.chat-messages {
-    flex: 1;
-    overflow-y: auto;
-    padding-bottom: 1em;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.chat-message {
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #6c757d; /* Lighter shade */
+    border-radius: 15px;
+    padding: 10px;
+    max-width: 70%;
+    margin-bottom: 10px;
+  }
+  
+  .bot-message {
+    text-align: left;
     display: flex;
     align-items: center;
-    margin: 0.5em 0;
-}
-
-.chat-message.bot {
-    justify-content: flex-start;
-}
-
-.chat-message.user {
-    justify-content: flex-end;
-    text-align: right;
-}
-
-.chat-message img {
-    border-radius: 50%;
+    background-color: #343a40; /* Dark background */
+    border-radius: 15px;
+    padding: 10px;
+    max-width: 70%;
+    margin-bottom: 10px;
+  }
+  
+  .message-avatar {
     width: 30px;
     height: 30px;
-    margin: 0 0.5em;
-}
-
-.dark-mode {
-    background-color: #333;
-    color: white;
-}
-
-.dark-mode nav {
-    background-color: #222;
-}
-
-.dark-mode .chat-container {
-    background-color: #444;
-}
-
-.dark-mode .chat-messages {
-    background-color: #222;
-    color: white;
-}
-
-.dark-mode .chat-input input {
-    background-color: #666;
-    color: white;
-    border: 1px solid #555;
-}
-
-.dark-mode .navbar-nav .nav-link i,
-.dark-mode .dropdown-item i {
-    color: #ffcc00;
-}
-
-.dark-mode .send-button {
-    background-color: #ffcc00;
-}
-
-.dark-mode .send-button:hover {
-    background-color: #e6b800;
-}
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+  .message-text {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100%;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: #ffffff; /* White text */
+  }
+  
+  .user-message .message-avatar {
+    margin-left: 10px;
+  }
+  
+  .bot-message .message-avatar {
+    margin-right: 10px;
+  }
+  

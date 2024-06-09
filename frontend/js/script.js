@@ -1,72 +1,66 @@
-document.getElementById('sendMessage').addEventListener('click', sendMessage);
-document.getElementById('userInput').addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        sendMessage();
+document.addEventListener('DOMContentLoaded', function() {
+    const chatWindow = document.querySelector('.chat-window');
+    const inputField = document.querySelector('.form-control');
+    const sendButton = document.getElementById('sendButton');
+  
+    const userAvatar = '<i class="fa-solid fa-user"></i>';
+    const botAvatar = '<i class="fa-solid fa-robot"></i>';
+  
+    function appendMessage(content, className, avatarHtml) {
+      const messageContainer = document.createElement('div');
+      messageContainer.className = className;
+  
+      const messageAvatar = document.createElement('span');
+      messageAvatar.innerHTML = avatarHtml;
+      messageAvatar.className = 'message-avatar';
+  
+      const messageText = document.createElement('span');
+      messageText.className = 'message-text';
+      messageText.innerText = content;
+  
+      if (className === 'user-message') {
+        messageContainer.appendChild(messageText);
+        messageContainer.appendChild(messageAvatar);
+      } else {
+        messageContainer.appendChild(messageAvatar);
+        messageContainer.appendChild(messageText);
+      }
+  
+      chatWindow.appendChild(messageContainer);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
     }
-});
-
-function sendMessage() {
-    const userInput = document.getElementById('userInput');
-    if (userInput.value.trim() !== '') {
-        appendMessage(userInput.value, 'user');
-        userInput.value = '';
-        setTimeout(() => {
-            streamBotMessage('This is a simulated bot response');
-        }, 500);
-    }
-}
-
-function appendMessage(message, sender) {
-    const chatMessages = document.getElementById('chatMessages');
-    const messageElement = document.createElement('div');
-    messageElement.classList.add('chat-message', sender);
-    messageElement.innerHTML = `<img src="${sender === 'user' ? 'https://i.ibb.co/Q9rNbwX/user-img.png' : 'https://i.ibb.co/GxSBbyz/bot-img.png'}" alt="${sender}"><div>${message}</div>`;
-    chatMessages.appendChild(messageElement);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-function streamBotMessage(message) {
-    const chatMessages = document.getElementById('chatMessages');
-    const messageElement = document.createElement('div');
-    messageElement.classList.add('chat-message', 'bot');
-    messageElement.innerHTML = `<img src="https://i.ibb.co/GxSBbyz/bot-img.png" alt="bot"><div id="botTyping"></div>`;
-    chatMessages.appendChild(messageElement);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-
-    let index = 0;
-    const typingInterval = setInterval(() => {
-        if (index < message.length) {
-            document.getElementById('botTyping').innerHTML += message[index];
-            index++;
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+  
+    function simulateBotResponse() {
+      const botMessage = "This is a simulated response.";
+      appendMessage('', 'bot-message', botAvatar);
+      const botMessageText = chatWindow.querySelector('.bot-message:last-child .message-text');
+  
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < botMessage.length) {
+          botMessageText.innerText += botMessage.charAt(i);
+          i++;
         } else {
-            clearInterval(typingInterval);
-            finalizeBotMessage(message);
+          clearInterval(interval);
         }
-    }, 50); // Adjust speed here (milliseconds per character)
-}
-
-function finalizeBotMessage(message) {
-    const botTyping = document.getElementById('botTyping');
-    const messageContent = botTyping.innerHTML;
-    botTyping.parentElement.innerHTML = `<img src="https://i.ibb.co/GxSBbyz/bot-img.png" alt="bot"><div>${messageContent}</div>`;
-}
-
-document.getElementById('toggleTheme').addEventListener('click', function() {
-    document.body.classList.toggle('dark-mode');
-    updateThemeIcon();
-});
-
-function updateThemeIcon() {
-    const themeIcon = document.getElementById('themeIcon');
-    if (document.body.classList.contains('dark-mode')) {
-        themeIcon.classList.remove('fa-moon');
-        themeIcon.classList.add('fa-sun');
-    } else {
-        themeIcon.classList.remove('fa-sun');
-        themeIcon.classList.add('fa-moon');
+      }, 50);
     }
-}
-
-// Initial call to set the correct icon based on the current theme
-updateThemeIcon();
+  
+    function sendMessage() {
+      const userMessage = inputField.value;
+      if (userMessage.trim() !== '') {
+        appendMessage(userMessage, 'user-message', userAvatar);
+        inputField.value = '';
+        setTimeout(simulateBotResponse, 500);
+      }
+    }
+  
+    inputField.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+  
+    sendButton.addEventListener('click', sendMessage);
+  });
+  
