@@ -6,10 +6,10 @@ from langchain_community.document_transformers.embeddings_redundant_filter impor
 from utils.helpers.text_splitter import get_relevant_chunks
 
 
-def parse_retriever_content(response: List[Document]):
+def parse_retriever_content(context: List[Document]):
     response_markdown = ""
 
-    for index, item in enumerate(response, start=1):
+    for index, item in enumerate(context, start=1):
         page_content = item.page_content
         relevant_content = get_relevant_chunks(text=page_content)
 
