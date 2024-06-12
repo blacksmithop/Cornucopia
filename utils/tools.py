@@ -7,7 +7,7 @@ from langchain.tools import BaseTool
 from langchain_community.tools import DuckDuckGoSearchRun, WikipediaQueryRun
 from langchain_community.utilities import WikipediaAPIWrapper
 
-from utils.chains import small_talk_chain
+from utils.chains import small_talk_chain, rag_chain
 from utils.helpers.knowledge_base import \
     compression_retriever_reordered as supplemented_knowledge_base
 from utils.helpers.parsers import parse_retriever_content
@@ -58,15 +58,22 @@ class CustomKnowledgeBaseTool(BaseTool):
         self, query: str, run_manager: Optional[CallbackManagerForToolRun] = None
     ) -> str:
         """Use the tool."""
-        response = supplemented_knowledge_base.get_relevant_documents(query=query)
-        parsed_response = parse_retriever_content(response=response)
-        return parsed_response
+        context = supplemented_knowledge_base.get_relevant_documents(query=query)
+        parsed_context = parse_retriever_content(context=context)
+        response = rag_chain.invoke({
+            "question": query, "context": parsed_context
+        })
+        return response
 
     async def _arun(
         self, query: str, run_manager: Optional[AsyncCallbackManagerForToolRun] = None
     ) -> str:
-        """Use the tool asynchronously."""
-        raise NotImplementedError("small_talk does not support async")
+        context = await supplemented_knowledge_base.aget_relevant_documents(query=query)
+        parsed_context = parse_retriever_content(context=context)
+        response = await rag_chain.ainvoke({
+            "question": query, "context": parsed_context
+        })
+        return response
 
 
 tool_list = [search, wikipedia, CustomKnowledgeBaseTool(), SmallTalkTool()]
