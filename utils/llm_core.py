@@ -38,6 +38,13 @@ gpt3_json_llm = AzureChatOpenAI(
     model_kwargs={"response_format": {"type": "json_object"}},
 )
 
+gpt4 = AzureChatOpenAI(
+    azure_endpoint=getenv("AZURE_OPENAI_GPT4_ENDPOINT"),
+    deployment_name=getenv("GPT4_DEPLOYMENT_NAME"),
+    api_key=getenv("GPT4_OPENAI_API_KEY"),
+    api_version=getenv("OPENAI_API_VERSION"),
+)
+
 # Make params configurable
 
 if __name__ == "__main__":
