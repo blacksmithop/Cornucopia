@@ -87,3 +87,5 @@ if prompt := st.chat_input("Ask me anything"):
                 pass
             assistant_message_text.markdown(bot_message)
         st.session_state.messages.append({"role": "assistant", "content": bot_message})
+
+st.button("📂")
