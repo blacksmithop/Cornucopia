@@ -4,10 +4,9 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 from utils.agent_with_memory import agent_with_chat_history as agent
-from utils.helpers.stream import simulate_streaming as stream_response
 from utils.helpers.image_upload import encode_image
+from utils.helpers.stream import simulate_streaming as stream_response
 from utils.tools import process_image_data
-
 
 st.set_page_config(page_title="Chat", page_icon="🗣️", initial_sidebar_state="collapsed")
 
@@ -120,5 +119,7 @@ with st.popover("📂"):
             )
             with st.spinner("Processing image"):
                 response = process_image_data(query=query, image_base64=image_base64)
-                st.session_state.messages.append({"role": "assistant", "content": response})
+                st.session_state.messages.append(
+                    {"role": "assistant", "content": response}
+                )
                 st.rerun()
