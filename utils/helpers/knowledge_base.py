@@ -8,7 +8,7 @@ from langchain_community.document_transformers import (
 from utils.embeddings import instruct_embeddings
 from utils.retrievers import custom_retriever, wiki_retriever
 
-lotr = MergerRetriever(retrievers=[wiki_retriever, custom_retriever])
+lotr = MergerRetriever(retrievers=[custom_retriever])
 
 
 filter = EmbeddingsRedundantFilter(embeddings=instruct_embeddings)

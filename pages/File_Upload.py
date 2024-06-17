@@ -1,8 +1,8 @@
 from tempfile import NamedTemporaryFile
 
 import streamlit as st
-from langchain_community.document_loaders import UnstructuredExcelLoader
-from langchain_community.document_loaders import Docx2txtLoader
+from langchain_community.document_loaders import (Docx2txtLoader,
+                                                  UnstructuredExcelLoader)
 from langchain_core.document_loaders import Blob
 from streamlit_option_menu import option_menu
 
@@ -89,7 +89,7 @@ if uploaded_files:
                         )
 
                         st.success(body=f"Processed {file_name}", icon="📂")
-                        
+
                     elif file_type == "docx":
                         tmpfilepath = NamedTemporaryFile(
                             dir="temp", suffix=".docx", delete=False
@@ -102,8 +102,7 @@ if uploaded_files:
                         )
 
                         st.success(body=f"Processed {file_name}", icon="📂")
-                        
-                        
+
                     for doc in documents:
                         doc.metadata["source"] = file_name
                         doc.metadata["title"] = file_name_raw
