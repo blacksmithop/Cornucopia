@@ -1,16 +1,22 @@
 from typing import Optional, Type
 
-from langchain.callbacks.manager import (AsyncCallbackManagerForToolRun,
-                                         CallbackManagerForToolRun)
+from langchain.callbacks.manager import (
+    AsyncCallbackManagerForToolRun,
+    CallbackManagerForToolRun,
+)
 from langchain.pydantic_v1 import BaseModel, Field
 from langchain.tools import BaseTool
 from langchain_community.tools import DuckDuckGoSearchRun, WikipediaQueryRun
 from langchain_community.utilities import WikipediaAPIWrapper
 
 from utils.chains import small_talk_chain, rag_chain
-from utils.helpers.knowledge_base import \
-    compression_retriever_reordered as supplemented_knowledge_base
+from utils.helpers.knowledge_base import (
+    compression_retriever_reordered as supplemented_knowledge_base,
+)
 from utils.helpers.parsers import parse_retriever_content
+from utils.llm_core import gpt4o
+from langchain.schema.messages import HumanMessage, AIMessage
+
 
 search = DuckDuckGoSearchRun()
 wikipedia = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
@@ -60,9 +66,7 @@ class CustomKnowledgeBaseTool(BaseTool):
         """Use the tool."""
         context = supplemented_knowledge_base.get_relevant_documents(query=query)
         parsed_context = parse_retriever_content(context=context)
-        response = rag_chain.invoke({
-            "question": query, "context": parsed_context
-        })
+        response = rag_chain.invoke({"question": query, "context": parsed_context})
         return response
 
     async def _arun(
@@ -70,13 +74,36 @@ class CustomKnowledgeBaseTool(BaseTool):
     ) -> str:
         context = await supplemented_knowledge_base.aget_relevant_documents(query=query)
         parsed_context = parse_retriever_content(context=context)
-        response = await rag_chain.ainvoke({
-            "question": query, "context": parsed_context
-        })
+        response = await rag_chain.ainvoke(
+            {"question": query, "context": parsed_context}
+        )
         return response
 
 
 tool_list = [search, wikipedia, CustomKnowledgeBaseTool(), SmallTalkTool()]
+
+
+def process_image_data(query: str, image_base64: str):
+    response = gpt4o.invoke(
+        [
+            AIMessage(
+                content="You are a useful bot that is good at image tasks"
+            ),
+            HumanMessage(
+                content=[
+                    {
+                        "type": "text",
+                        "text": "Identify all items on the this image which are food related and provide a list of what you see",
+                    },
+                    {
+                        "type": "image_url",
+                        "image_url": {"url": image_base64},
+                    },
+                ]
+            ),
+        ]
+    )
+    return response.content
 
 if __name__ == "__main__":
     print(wikipedia.run("HUNTER X HUNTER"))
