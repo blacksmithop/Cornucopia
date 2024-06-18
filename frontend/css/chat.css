@@ -1,0 +1,80 @@
+.chat-window {
+  width: 100%;
+  max-width: 600px;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.chat-header {
+  background-color: white;
+  border-bottom: 2px solid black;
+  padding: 10px;
+  text-align: center;
+}
+
+.chat-body {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.message {
+  background-color: #f1f1f1;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  max-width: 80%;
+}
+
+.system-message {
+  text-align: left;
+}
+
+.user-message {
+  text-align: right;
+  background-color: #d1e7dd;
+  margin-left: auto;
+}
+
+.chat-footer {
+  display: flex;
+  align-items: center;
+  border-top: 2px solid black;
+  width: 100%;
+}
+
+.file-upload {
+  display: inline-block;
+  padding: 10px;
+  cursor: pointer;
+  background-color: white;
+  border: none;
+}
+
+.file-input {
+  display: none;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-right: 2px solid black;
+}
+
+.send-button {
+  padding: 10px;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.send-button:hover {
+  background-color: black;
+  color: white;
+}
