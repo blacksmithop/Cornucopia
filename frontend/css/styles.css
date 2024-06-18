@@ -147,7 +147,18 @@ body {
 
 .chat-footer {
   display: flex;
+  align-items: center;
   border-top: 2px solid black;
+}
+
+.file-upload {
+  display: inline-block;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.file-input {
+  display: none;
 }
 
 .chat-input {
