@@ -4,6 +4,8 @@ import chromadb
 import pandas as pd
 import streamlit as st
 from streamlit_option_menu import option_menu
+from langchain.docstore.document import Document
+
 
 st.markdown(
     """
@@ -44,20 +46,31 @@ if navbar_options:
 
 st.markdown("# ⚙️ Settings")
 
-st.markdown("### ChromaDB Data Viewer")
+st.markdown("## ChromaDB Data Viewer")
 
 if not os.path.isdir(CHROMA_DIR):
     st.warning(f"No chroma db directory found at {CHROMA_DIR}", icon="❗")
 else:
     client = chromadb.PersistentClient(path=CHROMA_DIR)
 
-    st.header("Collections")
-
     for collection in client.list_collections():
         data = collection.get()
-        metadata = data["metadatas"]
-        documents = data["documents"]
 
-        df = pd.DataFrame.from_dict({"Documents": documents, "Metadata": metadata})
-        with st.expander(f"### **{collection.name}**"):
-            st.dataframe(df)
+        st.markdown(f"#### Collection - {collection.name}")
+        
+        unique_titles={m['title'] for m in collection.get(where={"title":{"$ne":""}},include=['metadatas'])['metadatas'] if 'title' in m}
+
+        documents = [
+            Document(page_content=content, metadata={"title": meta["title"]})
+            for content, meta in zip(data["documents"], data["metadatas"])
+            if content != "" and len(content) > 5 and meta["title"] != ""
+        ]
+        title_document_map = {k:[] for k in unique_titles}
+
+        for doc in documents:
+            title_document_map[doc.metadata["title"]].append(doc.page_content)
+
+        for topic, documents in title_document_map.items():
+            with st.expander(f"**{topic}**"):
+                df = pd.DataFrame({"Content": documents})
+                st.dataframe(df)
