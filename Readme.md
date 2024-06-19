@@ -16,6 +16,7 @@ graph TD
   E-->H["Text/Markdown"]
   E-->I["Excel"]
   E-->J["PDF"]
+  E-->K["Docx"]
   F-->G
   H-->G
   I-->G
