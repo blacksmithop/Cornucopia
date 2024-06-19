@@ -1,42 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>File Upload Page</title>
-  <link rel="stylesheet" href="./css/base.css">
-  <link rel="stylesheet" href="./css/upload.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload Page</title>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/upload.css">
 </head>
-
 <body>
-  <div class="navbar">
-    <ul>
-      <li><a href="index">Home</a></li>
-      <li class="dropdown">
-        <a href="javascript:void(0)" class="dropbtn">Account</a>
-        <div class="dropdown-content">
-          <a href="upload_file">Upload File</a>
-          <a href="settings">Settings</a>
-          <a href="#logout">Logout</a>
-      </div>
-      </li>
-    </ul>
-  </div>
-  <div class="content">
-    <h1>File Upload</h1>
-    <div class="file-upload-container">
-      <label for="file-upload" class="file-upload">
-        📂 Upload File
-      </label>
-      <input type="file" id="file-upload" class="file-input">
-      <div id="status-container"></div>
+    <div class="navbar">
+        <ul>
+            <li><a href="index">Home</a></li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">Account</a>
+                <div class="dropdown-content">
+                    <a href="upload_file">Upload File</a>
+                    <a href="settings">Settings</a>
+                    <a href="#logout">Logout</a>
+                </div>
+            </li>
+        </ul>
     </div>
-  </div>
-  <div class="footer">
-    <p><strong>&copy; 2024 Abhinav KM</strong></p>
-</div>
-  <script src="./js/upload.js"></script>
+    <div class="content">
+        <h1>File Upload</h1>
+        <div class="file-upload-container">
+            <label for="file-upload" class="file-upload">
+                📂 Upload File
+            </label>
+            <input type="file" id="file-upload" class="file-input" accept=".xlsx,.docx,.txt,.md,.pdf">
+            <div id="status-container"></div>
+        </div>
+    </div>
+    <div class="footer">
+        <p><strong>&copy; 2024 Abhinav KM</strong></p>
+    </div>
+    <script src="./js/upload.js"></script>
 </body>
-
 </html>

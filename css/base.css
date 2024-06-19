@@ -54,9 +54,14 @@ body {
 .footer {
     margin-top: auto;
     text-align: center;
-    padding: 5px 20px;
-    font-size: 0.8em;
+    padding: 8px 20px;
+    font-size: 1em;
+    background-color: #f1f1f1;
+    border-top: 2px solid black;
+    color: #333;
+    font-weight: bold;
 }
+
 
 .dropdown {
     position: relative;
