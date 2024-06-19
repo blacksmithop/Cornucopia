@@ -1,61 +1,51 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const chatInput = document.getElementById('chat-input');
-  const sendButton = document.getElementById('send-button');
-  const chatBody = document.getElementById('chat-body');
-  const fileUpload = document.getElementById('file-upload');
+    const fileUpload = document.getElementById('file-upload');
+    const chatBody = document.getElementById('chat-body');
+    const chatInput = document.getElementById('chat-input');
+    const sendButton = document.getElementById('send-button');
 
-  function sendMessage() {
-      const messageText = chatInput.value.trim();
-      if (messageText) {
-          const userMessageElement = document.createElement('div');
-          userMessageElement.className = 'message user-message';
-          userMessageElement.textContent = messageText;
-          chatBody.appendChild(userMessageElement);
-          chatInput.value = '';
-          chatBody.scrollTop = chatBody.scrollHeight;
+    fileUpload.addEventListener('change', function () {
+        const file = fileUpload.files[0];
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message user-message image-message';
+                messageDiv.appendChild(img);
+                chatBody.appendChild(messageDiv);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
 
-          // Simulate a response from the system
-          setTimeout(() => {
-              simulateResponse("This is a dummy response from the system.");
-          }, 1000);
-      }
-  }
+    sendButton.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
 
-  function simulateResponse(text) {
-      const systemMessageElement = document.createElement('div');
-      systemMessageElement.className = 'message system-message';
-      chatBody.appendChild(systemMessageElement);
+    function sendMessage() {
+        const messageText = chatInput.value.trim();
+        if (messageText !== '') {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message user-message';
+            messageDiv.textContent = messageText;
+            chatBody.appendChild(messageDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+            chatInput.value = '';
 
-      let index = 0;
-      function typeCharacter() {
-          if (index < text.length) {
-              systemMessageElement.textContent += text.charAt(index);
-              index++;
-              setTimeout(typeCharacter, 50); // Adjust typing speed here
-          } else {
-              chatBody.scrollTop = chatBody.scrollHeight;
-          }
-      }
-      typeCharacter();
-  }
-
-  sendButton.addEventListener('click', sendMessage);
-
-  chatInput.addEventListener('keypress', function (event) {
-      if (event.key === 'Enter') {
-          sendMessage();
-          event.preventDefault();
-      }
-  });
-
-  fileUpload.addEventListener('change', function () {
-      const file = fileUpload.files[0];
-      if (file) {
-          const fileMessageElement = document.createElement('div');
-          fileMessageElement.className = 'message user-message';
-          fileMessageElement.textContent = `File uploaded: ${file.name}`;
-          chatBody.appendChild(fileMessageElement);
-          chatBody.scrollTop = chatBody.scrollHeight;
-      }
-  });
+            // Simulate a response
+            setTimeout(() => {
+                const responseDiv = document.createElement('div');
+                responseDiv.className = 'message system-message';
+                responseDiv.textContent = 'This is a dummy response from the system.';
+                chatBody.appendChild(responseDiv);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1000);
+        }
+    }
 });
