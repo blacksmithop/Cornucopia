@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings Page</title>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/settings.css">
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">Account</a>
+                <div class="dropdown-content">
+                    <a href="upload_file.html">Upload File</a>
+                    <a href="settings.html">Settings</a>
+                    <a href="#logout">Logout</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="content">
+        <div class="settings-container">
+            <div class="settings-sidebar">
+                <h3>Settings</h3>
+                <ul>
+                    <li><a href="#profile" class="settings-link" data-section="profile">Profile</a></li>
+                    <li><a href="#security" class="settings-link" data-section="security">Security</a></li>
+                    <li><a href="#notifications" class="settings-link" data-section="notifications">Notifications</a></li>
+                    <li><a href="#privacy" class="settings-link" data-section="privacy">Privacy</a></li>
+                </ul>
+            </div>
+            <div class="settings-content" id="settings-content">
+                <div id="profile" class="settings-section">
+                    <h2>Edit Profile</h2>
+                    <form>
+                        <div class="form-group">
+                            <label for="avatar">Avatar</label>
+                            <input type="file" id="avatar" name="avatar">
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" placeholder="Enter your username">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" placeholder="Enter your password">
+                        </div>
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
+                <div id="security" class="settings-section" style="display:none;">
+                    <h2>Security Settings</h2>
+                    <form>
+                        <div class="form-group">
+                            <label for="current-password">Current Password</label>
+                            <input type="password" id="current-password" name="current-password" placeholder="Enter current password">
+                        </div>
+                        <div class="form-group">
+                            <label for="new-password">New Password</label>
+                            <input type="password" id="new-password" name="new-password" placeholder="Enter new password">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password">Confirm Password</label>
+                            <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm new password">
+                        </div>
+                        <button type="submit">Update Password</button>
+                    </form>
+                </div>
+                <div id="notifications" class="settings-section" style="display:none;">
+                    <h2>Notification Settings</h2>
+                    <form>
+                        <div class="form-group">
+                            <label for="email-notifications">Email Notifications</label>
+                            <input type="checkbox" id="email-notifications" name="email-notifications">
+                        </div>
+                        <div class="form-group">
+                            <label for="sms-notifications">SMS Notifications</label>
+                            <input type="checkbox" id="sms-notifications" name="sms-notifications">
+                        </div>
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
+                <div id="privacy" class="settings-section" style="display:none;">
+                    <h2>Privacy Settings</h2>
+                    <form>
+                        <div class="form-group">
+                            <label for="profile-visibility">Profile Visibility</label>
+                            <select id="profile-visibility" name="profile-visibility">
+                                <option value="public">Public</option>
+                                <option value="private">Private</option>
+                                <option value="friends">Friends Only</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="search-visibility">Search Visibility</label>
+                            <select id="search-visibility" name="search-visibility">
+                                <option value="public">Public</option>
+                                <option value="private">Private</option>
+                                <option value="friends">Friends Only</option>
+                            </select>
+                        </div>
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 Your Company. All rights reserved.</p>
+    </div>
+    <script src="./js/settings.js"></script>
+</body>
+</html>

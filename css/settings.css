@@ -1,0 +1,91 @@
+.settings-container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    border: 2px solid black;
+    margin-top: 20px;
+}
+
+.settings-sidebar {
+    width: 25%;
+    border-right: 2px solid black;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.settings-sidebar h3 {
+    margin-top: 0;
+}
+
+.settings-sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.settings-sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.settings-sidebar ul li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.settings-sidebar ul li a:hover {
+    background-color: black;
+    color: white;
+}
+
+.settings-content {
+    width: 75%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.settings-content h2 {
+    margin-top: 0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}
+
+.settings-section {
+    display: none;
+}
+
+.settings-section.active {
+    display: block;
+}
