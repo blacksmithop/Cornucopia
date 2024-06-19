@@ -46,6 +46,8 @@
     align-items: center;
     justify-content: space-between;
     flex-direction: row;
+    width: 80%;
+    box-sizing: border-box;
 }
 
 .success-icon {
