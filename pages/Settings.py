@@ -3,9 +3,8 @@ import os
 import chromadb
 import pandas as pd
 import streamlit as st
-from streamlit_option_menu import option_menu
 from langchain.docstore.document import Document
-
+from streamlit_option_menu import option_menu
 
 st.markdown(
     """
@@ -57,15 +56,21 @@ else:
         data = collection.get()
 
         st.markdown(f"#### Collection - {collection.name}")
-        
-        unique_titles={m['title'] for m in collection.get(where={"title":{"$ne":""}},include=['metadatas'])['metadatas'] if 'title' in m}
+
+        unique_titles = {
+            m["title"]
+            for m in collection.get(
+                where={"title": {"$ne": ""}}, include=["metadatas"]
+            )["metadatas"]
+            if "title" in m
+        }
 
         documents = [
             Document(page_content=content, metadata={"title": meta["title"]})
             for content, meta in zip(data["documents"], data["metadatas"])
             if content != "" and len(content) > 5 and meta["title"] != ""
         ]
-        title_document_map = {k:[] for k in unique_titles}
+        title_document_map = {k: [] for k in unique_titles}
 
         for doc in documents:
             title_document_map[doc.metadata["title"]].append(doc.page_content)
