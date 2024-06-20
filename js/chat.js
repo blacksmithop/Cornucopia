@@ -145,12 +145,13 @@ document.addEventListener('DOMContentLoaded', function () {
             stepDiv.className = 'step';
             const stepInfo = step[0];
             const stepResult = step[1];
+            const truncatedResult = stepResult.length > 100 ? stepResult.substring(0, 100) + '...' : stepResult;
             stepDiv.innerHTML = `<strong>Step ${index + 1}:</strong><br> 
                                  <strong>Tool:</strong> ${stepInfo.tool}<br>
                                  <strong>Tool Input:</strong> ${stepInfo.tool_input}<br>
                                  <strong>Log:</strong> ${stepInfo.log}<br>
                                  <strong>Type:</strong> ${stepInfo.type}<br>
-                                 <strong>Result:</strong> <span class="result-content">${stepResult.substring(0, 100)}...</span><button class="show-more-button">View Less</button><div class="step-content"><p>${stepResult}</p></div>`;
+                                 <strong>Result:</strong> <span class="result-content">${truncatedResult}</span> <button class="show-more-button">View More</button><div class="step-content"><p>${stepResult}</p></div>`;
             stepsContent.appendChild(stepDiv);
 
             const showMoreButton = stepDiv.querySelector('.show-more-button');
@@ -159,12 +160,12 @@ document.addEventListener('DOMContentLoaded', function () {
             showMoreButton.addEventListener('click', function () {
                 const isHidden = stepContent.style.display === 'none' || stepContent.style.display === '';
                 stepContent.style.display = isHidden ? 'block' : 'none';
-                showMoreButton.textContent = isHidden ? 'View More' : 'View Less';
+                showMoreButton.textContent = isHidden ? 'View Less' : 'View More';
+                stepDiv.querySelector('.result-content').textContent = isHidden ? stepResult : truncatedResult;
             });
 
-            // Initialize with 'View Less'
+            // Initialize with 'View More'
             stepContent.style.display = 'none';
-            showMoreButton.textContent = 'View More';
         });
         modal.style.display = 'block';
     }
