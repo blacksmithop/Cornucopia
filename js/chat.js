@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const chatBody = document.getElementById('chat-body');
     const chatInput = document.getElementById('chat-input');
     const sendButton = document.getElementById('send-button');
+    const clearChatButton = document.getElementById('clear-chat');
 
     fileUpload.addEventListener('change', function () {
         const file = fileUpload.files[0];
@@ -43,6 +44,14 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.key === 'Enter') {
             sendMessage();
         }
+    });
+
+    clearChatButton.addEventListener('click', function (e) {
+        chatBody.innerHTML = '';
+        const welcomeMessage = document.createElement('div');
+        welcomeMessage.className = 'message system-message';
+        welcomeMessage.textContent = 'Hello! How can I help you today?';
+        chatBody.appendChild(welcomeMessage);
     });
 
     function sendMessage() {
@@ -90,21 +99,17 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => {
                 clearTimeout(timeoutId); // Clear the timeout
                 chatBody.removeChild(spinnerDiv); // Remove the spinner
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'message system-message error-message';
                 if (error.name === 'AbortError') {
                     console.error('Fetch request timed out');
-                    const errorDiv = document.createElement('div');
-                    errorDiv.className = 'message system-message';
                     errorDiv.textContent = 'Request timed out. Please try again.';
-                    chatBody.appendChild(errorDiv);
-                    chatBody.scrollTop = chatBody.scrollHeight;
                 } else {
                     console.error('Error:', error);
-                    const errorDiv = document.createElement('div');
-                    errorDiv.className = 'message system-message';
                     errorDiv.textContent = 'An error occurred. Please try again.';
-                    chatBody.appendChild(errorDiv);
-                    chatBody.scrollTop = chatBody.scrollHeight;
                 }
+                chatBody.appendChild(errorDiv);
+                chatBody.scrollTop = chatBody.scrollHeight;
             });
         }
     }
