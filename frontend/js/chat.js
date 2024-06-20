@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const chatInput = document.getElementById('chat-input');
     const sendButton = document.getElementById('send-button');
     const clearChatButton = document.getElementById('clear-chat');
+    const modal = document.getElementById('steps-modal');
+    const closeModal = document.querySelector('.close');
+    const stepsContent = document.getElementById('steps-content');
 
     fileUpload.addEventListener('change', function () {
         const file = fileUpload.files[0];
@@ -52,6 +55,16 @@ document.addEventListener('DOMContentLoaded', function () {
         welcomeMessage.className = 'message system-message';
         welcomeMessage.textContent = 'Hello! How can I help you today?';
         chatBody.appendChild(welcomeMessage);
+    });
+
+    closeModal.addEventListener('click', function () {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
     });
 
     function sendMessage() {
@@ -94,6 +107,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 responseDiv.className = 'message system-message';
                 responseDiv.textContent = data.response; // Assuming the response structure contains a 'response' field
                 chatBody.appendChild(responseDiv);
+
+                // Add view steps button
+                const viewStepsButton = document.createElement('button');
+                viewStepsButton.className = 'view-steps-button';
+                viewStepsButton.innerHTML = '👁️';
+                responseDiv.appendChild(viewStepsButton);
+
+                viewStepsButton.addEventListener('click', function () {
+                    showSteps(data.steps);
+                });
+
                 chatBody.scrollTop = chatBody.scrollHeight;
             })
             .catch(error => {
@@ -112,5 +136,36 @@ document.addEventListener('DOMContentLoaded', function () {
                 chatBody.scrollTop = chatBody.scrollHeight;
             });
         }
+    }
+
+    function showSteps(steps) {
+        stepsContent.innerHTML = '';
+        steps.forEach((step, index) => {
+            const stepDiv = document.createElement('div');
+            stepDiv.className = 'step';
+            const stepInfo = step[0];
+            const stepResult = step[1];
+            stepDiv.innerHTML = `<strong>Step ${index + 1}:</strong><br> 
+                                 <strong>Tool:</strong> ${stepInfo.tool}<br>
+                                 <strong>Tool Input:</strong> ${stepInfo.tool_input}<br>
+                                 <strong>Log:</strong> ${stepInfo.log}<br>
+                                 <strong>Type:</strong> ${stepInfo.type}<br>
+                                 <strong>Result:</strong> <span class="result-content">${stepResult.substring(0, 100)}...</span><button class="show-more-button">View Less</button><div class="step-content"><p>${stepResult}</p></div>`;
+            stepsContent.appendChild(stepDiv);
+
+            const showMoreButton = stepDiv.querySelector('.show-more-button');
+            const stepContent = stepDiv.querySelector('.step-content');
+
+            showMoreButton.addEventListener('click', function () {
+                const isHidden = stepContent.style.display === 'none' || stepContent.style.display === '';
+                stepContent.style.display = isHidden ? 'block' : 'none';
+                showMoreButton.textContent = isHidden ? 'View More' : 'View Less';
+            });
+
+            // Initialize with 'View Less'
+            stepContent.style.display = 'none';
+            showMoreButton.textContent = 'View More';
+        });
+        modal.style.display = 'block';
     }
 });

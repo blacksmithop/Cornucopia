@@ -19,8 +19,9 @@ async def chat_with_ai(payload: ChatMessage):
             config={"configurable": {"session_id": session_id}},
     )
     
-    logger.warning(response)
+    output = response["output"]
+    intermediate_steps = response["intermediate_steps"]
     
     return {
-        "response": response["output"]
+        "response": output, "steps": intermediate_steps
     }
