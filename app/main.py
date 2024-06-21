@@ -1,8 +1,8 @@
 from fastapi import FastAPI
-from app.routers import chat
 from fastapi.middleware.cors import CORSMiddleware
-                      
-                         
+
+from app.routers import chat
+
 VERSION = "1.0.0"
 
 app = FastAPI()

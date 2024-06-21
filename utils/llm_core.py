@@ -1,10 +1,8 @@
 from os import getenv
 
 from dotenv import load_dotenv
-
-from langchain_openai import AzureChatOpenAI
 from langchain_community.llms.ollama import Ollama
-
+from langchain_openai import AzureChatOpenAI
 
 load_dotenv()
 
@@ -28,7 +26,7 @@ gpt4o = AzureChatOpenAI(
 
 phi3_ollama = Ollama(model="phi3:latest", base_url=getenv("OLLAMA_HOST"))
 
-gpt3_llm.with_fallbacks([phi3_ollama]) # Use Ollama as fallabck
+gpt3_llm.with_fallbacks([phi3_ollama])  # Use Ollama as fallabck
 
 # Make params configurable
 

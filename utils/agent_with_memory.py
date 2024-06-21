@@ -8,7 +8,12 @@ from utils.tools import tool_list as tools
 
 agent = create_react_agent(llm, tools, prompt)
 agent_executor = AgentExecutor(
-    agent=agent, tools=tools, handle_parsing_errors=True, max_iterations=6, verbose=True, return_intermediate_steps=True
+    agent=agent,
+    tools=tools,
+    handle_parsing_errors=True,
+    max_iterations=6,
+    verbose=True,
+    return_intermediate_steps=True,
 )
 
 agent_with_chat_history = RunnableWithMessageHistory(

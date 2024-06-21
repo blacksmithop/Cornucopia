@@ -1,19 +1,16 @@
 from typing import Optional, Type
 
-from langchain.callbacks.manager import (
-    AsyncCallbackManagerForToolRun,
-    CallbackManagerForToolRun,
-)
+from langchain.callbacks.manager import (AsyncCallbackManagerForToolRun,
+                                         CallbackManagerForToolRun)
 from langchain.pydantic_v1 import BaseModel, Field
 from langchain.schema.messages import AIMessage, HumanMessage
 from langchain.tools import BaseTool
 from langchain_community.tools import DuckDuckGoSearchRun, WikipediaQueryRun
 from langchain_community.utilities import WikipediaAPIWrapper
 
-from utils.chains import rag_chain, small_talk_chain, reasoning_chain
-from utils.helpers.knowledge_base import (
-    compression_retriever_reordered as supplemented_knowledge_base,
-)
+from utils.chains import rag_chain, reasoning_chain, small_talk_chain
+from utils.helpers.knowledge_base import \
+    compression_retriever_reordered as supplemented_knowledge_base
 from utils.helpers.parsers import parse_retriever_content
 from utils.llm_core import gpt4o
 
@@ -99,7 +96,13 @@ class ReasoningTool(BaseTool):
         raise NotImplementedError("custom_search does not support async")
 
 
-tool_list = [search, wikipedia, CustomKnowledgeBaseTool(), SmallTalkTool(), ReasoningTool()]
+tool_list = [
+    search,
+    wikipedia,
+    CustomKnowledgeBaseTool(),
+    SmallTalkTool(),
+    ReasoningTool(),
+]
 
 
 def process_image_data(query: str, image_base64: str):

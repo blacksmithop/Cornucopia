@@ -1,11 +1,10 @@
 import json
-from typing import Any, AsyncIterator, Dict, Iterator, List, Mapping, Optional, Union
+from typing import (Any, AsyncIterator, Dict, Iterator, List, Mapping,
+                    Optional, Union)
 
 import ollama
-from langchain_core.callbacks import (
-    AsyncCallbackManagerForLLMRun,
-    CallbackManagerForLLMRun,
-)
+from langchain_core.callbacks import (AsyncCallbackManagerForLLMRun,
+                                      CallbackManagerForLLMRun)
 from langchain_core.language_models import BaseLanguageModel
 from langchain_core.language_models.llms import BaseLLM
 from langchain_core.outputs import GenerationChunk, LLMResult
@@ -117,7 +116,10 @@ class _OllamaCommon(BaseLanguageModel):
     ) -> GenerationChunk:
         final_chunk: Optional[GenerationChunk] = None
         for stream_resp in self._create_stream(
-            api_url=f"{self.host}/generate", payload={"prompt": prompt}, stop=stop, **kwargs
+            api_url=f"{self.host}/generate",
+            payload={"prompt": prompt},
+            stop=stop,
+            **kwargs,
         ):
             chunk = _stream_response_to_generation_chunk(stream_resp)
             if final_chunk is None:
@@ -144,7 +146,10 @@ class _OllamaCommon(BaseLanguageModel):
     ) -> GenerationChunk:
         final_chunk: Optional[GenerationChunk] = None
         async for stream_resp in self._acreate_stream(
-            api_url=f"{self.host}/generate", payload={"prompt": prompt}, stop=stop, **kwargs
+            api_url=f"{self.host}/generate",
+            payload={"prompt": prompt},
+            stop=stop,
+            **kwargs,
         ):
             chunk = _stream_response_to_generation_chunk(stream_resp)
             if final_chunk is None:
@@ -227,7 +232,10 @@ class Ollama(BaseLLM, _OllamaCommon):
         **kwargs: Any,
     ) -> Iterator[GenerationChunk]:
         for stream_resp in self._create_stream(
-            api_url=f"{self.host}/generate", payload={"prompt": prompt}, stop=stop, **kwargs
+            api_url=f"{self.host}/generate",
+            payload={"prompt": prompt},
+            stop=stop,
+            **kwargs,
         ):
             chunk = _stream_response_to_generation_chunk(stream_resp)
             if run_manager:
@@ -245,7 +253,10 @@ class Ollama(BaseLLM, _OllamaCommon):
         **kwargs: Any,
     ) -> AsyncIterator[GenerationChunk]:
         async for stream_resp in self._acreate_stream(
-            api_url=f"{self.host}/generate", payload={"prompt": prompt}, stop=stop, **kwargs
+            api_url=f"{self.host}/generate",
+            payload={"prompt": prompt},
+            stop=stop,
+            **kwargs,
         ):
             chunk = _stream_response_to_generation_chunk(stream_resp)
             if run_manager:
@@ -254,4 +265,3 @@ class Ollama(BaseLLM, _OllamaCommon):
                     verbose=self.verbose,
                 )
             yield chunk
-            
