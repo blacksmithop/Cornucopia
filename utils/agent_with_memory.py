@@ -1,7 +1,7 @@
 from langchain.agents import AgentExecutor, create_react_agent
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
-from utils.llm_core import gpt3_llm as llm
+from utils.llm_core import chat_llm as llm
 from utils.memory import get_session_history as memory
 from utils.prompts import react_prompt as prompt
 from utils.tools import tool_list as tools

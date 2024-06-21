@@ -1,7 +1,7 @@
 from langchain.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-from utils.llm_core import gpt3_llm
+from utils.llm_core import chat_llm
 
 small_talk_prompt = PromptTemplate.from_template(
     """
@@ -13,7 +13,7 @@ Response:
 """
 )
 
-small_talk_chain = small_talk_prompt | gpt3_llm | StrOutputParser()
+small_talk_chain = small_talk_prompt | chat_llm | StrOutputParser()
 
 reasoning_prompt = PromptTemplate.from_template(
     """
@@ -25,7 +25,7 @@ Response:
 """
 )
 
-reasoning_chain = reasoning_prompt | gpt3_llm | StrOutputParser()
+reasoning_chain = reasoning_prompt | chat_llm | StrOutputParser()
 
 rag_prompt = PromptTemplate.from_template(
     """
@@ -39,4 +39,4 @@ Answer:
 """
 )
 
-rag_chain = rag_prompt | gpt3_llm | StrOutputParser()
+rag_chain = rag_prompt | chat_llm | StrOutputParser()

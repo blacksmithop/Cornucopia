@@ -12,7 +12,7 @@ from utils.chains import rag_chain, reasoning_chain, small_talk_chain
 from utils.helpers.knowledge_base import \
     compression_retriever_reordered as supplemented_knowledge_base
 from utils.helpers.parsers import parse_retriever_content
-from utils.llm_core import gpt4o
+from utils.llm_core import vision_llm
 
 search = DuckDuckGoSearchRun()
 wikipedia = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
@@ -106,7 +106,7 @@ tool_list = [
 
 
 def process_image_data(query: str, image_base64: str):
-    response = gpt4o.invoke(
+    response = vision_llm.invoke(
         [
             AIMessage(content="You are a useful bot that is good at image tasks"),
             HumanMessage(
