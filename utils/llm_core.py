@@ -25,11 +25,12 @@ try:
     )
 except KeyError:
     # Use Ollama
-    chat_llm = Ollama(model="phi3:latest", base_url=getenv("OLLAMA_HOST"))
+    chat_llm = Ollama(model=getenv("OLLAMA_MODEL"), base_url=getenv("OLLAMA_HOST"))
     vision_llm = chat_llm
 
 # Make params configurable
 
 if __name__ == "__main__":
+    pass
     # print(embeddings.embed_query("hi")[:5])
-    print(gpt3_llm.invoke("Tell me a joke").content)
+    # print(gpt3_llm.invoke("Tell me a joke").content)
