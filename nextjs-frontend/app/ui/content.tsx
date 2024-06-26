@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 
+
 export default function Content() {
   const [messages, setMessages] = useState<Message[]>([
     { type: 'system', text: 'Hello! How can I help you today?' },
@@ -39,7 +40,7 @@ export default function Content() {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
     setInputValue('');
 
-    const spinnerMessage: Message = { type: 'system', text: 'Loading...', isSpinner: true };
+    const spinnerMessage: Message = { type: 'system', isSpinner: true };
     setMessages((prevMessages) => [...prevMessages, spinnerMessage]);
 
     try {
@@ -70,6 +71,7 @@ export default function Content() {
         text: error.name === 'AbortError'
           ? 'Request timed out. Please try again.'
           : 'An error occurred. Please try again.',
+        isError: true,
       };
       setMessages((prevMessages) => [...prevMessages, errorMessage]);
     }
@@ -112,29 +114,27 @@ export default function Content() {
       <div className="flex-grow mt-20 mb-10">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="border border-black p-6 rounded-lg shadow-lg">
-            <div className="relative inline-block text-left">
-              <div>
-                <button
-                  type="button"
-                  className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  onClick={toggleDropdown}
+            <div className="relative inline-block text-left mb-4">
+              <button
+                type="button"
+                className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                onClick={toggleDropdown}
+              >
+                Options
+                <svg
+                  className="-mr-1 ml-2 h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
                 >
-                  Options
-                  <svg
-                    className="-mr-1 ml-2 h-5 w-5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.293 9.293a1 1 0 011.414 0L10 12.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </button>
-              </div>
+                  <path
+                    fillRule="evenodd"
+                    d="M5.293 9.293a1 1 0 011.414 0L10 12.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
               {isDropdownOpen && (
                 <div
                   className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
@@ -162,16 +162,33 @@ export default function Content() {
               {messages.map((message, index) => (
                 <div
                   key={index}
-                  className={`message ${message.type}-message ${message.isImage ? 'image-message' : ''}`}
+                  className={`message ${message.type}-message ${
+                    message.isImage ? 'image-message' : ''
+                  } ${message.isError ? 'error-message' : ''} mb-4 p-4 rounded border shadow flex`}
+                  style={{
+                    borderColor: message.isError ? 'red' : 'black',
+                    color: message.isError ? 'white' : 'black',
+                    backgroundColor: message.isError ? 'red' : 'white',
+                    textAlign: message.type === 'user' ? 'right' : 'left',
+                    marginLeft: message.type === 'user' ? 'auto' : '0',
+                    marginRight: message.type === 'user' ? '0' : 'auto',
+                    maxWidth: '80%',
+                  }}
                 >
-                  {message.isImage ? (
-                    <img src={message.src} alt="User upload" />
-                  ) : (
-                    message.text
-                  )}
+                  <div className="flex-grow">
+                    {message.isImage ? (
+                      <img src={message.src} alt="User upload" />
+                    ) : message.isSpinner ? (
+                      <div className="flex justify-center items-center">
+                        <div className="spinner"></div>
+                      </div>
+                    ) : (
+                      message.text
+                    )}
+                  </div>
                   {message.type === 'steps' && (
                     <button
-                      className="view-steps-button"
+                      className="ml-2 text-blue-500 hover:text-blue-700 focus:outline-none"
                       onClick={() => showSteps(message.steps!)}
                     >
                       👁️
@@ -222,7 +239,7 @@ export default function Content() {
           id="steps-modal"
           className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
         >
-          <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+          <div className="relative top-20 mx-auto p-5 border w-2/3 shadow-lg rounded-md bg-white">
             <button
               className="close absolute top-2 right-2 text-gray-500 hover:text-gray-800"
               onClick={() => setModalOpen(false)}
@@ -243,7 +260,7 @@ export default function Content() {
                     {expandedSteps[index] ? step[1] : step[1].substring(0, 100) + '...'}
                   </span>
                   <button
-                    className="show-more-button ml-2 text-blue-500"
+                    className="show-more-button ml-2 text-blue-500 hover:text-blue-700"
                     onClick={() => toggleStep(index)}
                   >
                     {expandedSteps[index] ? 'View Less' : 'View More'}
@@ -257,3 +274,4 @@ export default function Content() {
     </div>
   );
 }
+
